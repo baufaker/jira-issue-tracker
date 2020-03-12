@@ -32,8 +32,9 @@ let jira = new JiraClient({
 
 app.get('/', function(req, res) {
     let resultArray = [];
+    console.log('chegou: ', req.query);
     jira.search.search({
-        jql: `project = ${"AH"} AND status changed to FINALIZADO during (\"2020/03/01\", \"2020/03/11\")`
+        jql: `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`
     }, (error, result)  => {
         result.issues.forEach(issue => {
             resultArray.push({

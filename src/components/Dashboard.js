@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCollaborators } from '../state/state';
+import DatePicker from 'react-datepicker';
 
 import './Dashboard.css';
 
@@ -8,9 +8,10 @@ import './Dashboard.css';
 
 const Dashboard = () => {
     // const [collaborators, setCollaborators] = useState([])
-    const [projects, setProjects] = useState(["AH", "NS", "DES"])
-    const [startDate, setStartDate] = useState()
-    const [endDate, setEndDate] = useState()
+    const [projects, setProjects] = useState(["DA", "AH", "NS", "DES"])
+    const [selectedProj, setSelectedProj] = useState(null)
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [issues, setIssues] = useState([])
     
@@ -21,31 +22,38 @@ const Dashboard = () => {
     }, [])
 
     const searchIssues = () => {
-        //get issues
-        setIsLoading(true);
-
-        fetch("http://localhost:8443")
-        .then(r=> r.json())
-        .then(data=>{
-            setIssues(data);
-            setIsLoading(false);
-        })
-        .catch(err=>console.log(err))
+        if(startDate === "" || endDate === "" || selectedProj === null) {
+            alert('insira os dados da busca');
+        } else {
+            //get issues
+            setIsLoading(true);
+    
+            fetch(`http://localhost:8443?proj=${selectedProj}&startDate=${startDate}&endDate=${endDate}`)
+            .then(r=> r.json())
+            .then(data=>{
+                setIssues(data);
+                setIsLoading(false);
+            })
+            .catch(err=>console.log(err))
+        }
     }
 
     return(
         <div className="">
             <h1>Controle de Atividade de Desenvolvimento</h1>
             <form>
-                <select>
+                <select onChange={e => setSelectedProj(e.target.value)}>
                     {projects.map((p)=>{
                         return(
-                            <option value={p}>
+                            <option key={p} value={p}>
                                 {p}
                             </option>
                         )
                     })}
                 </select>
+                <input name="start" type="text" placeholder="aaaa/mm/ddd" onChange={e => setStartDate(e.target.value)}/>
+                <input name="end" type="text" placeholder="aaaa/mm/ddd" onChange={e => setEndDate(e.target.value)}/>
+                <button type="button" onClick={searchIssues}>Buscar</button>
             </form>
             {issues.length>0 ? 
             (
