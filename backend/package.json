@@ -1,0 +1,14 @@
+{
+  "name": "dev-admin-dashboard-backend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "jira-connector": "^3.1.0",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  }
+}
