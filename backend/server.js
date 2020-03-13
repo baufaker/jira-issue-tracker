@@ -32,10 +32,23 @@ let jira = new JiraClient({
 
 app.get('/', function(req, res) {
     let resultArray = [];
+    let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+    // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
+
     console.log('chegou: ', req.query);
     jira.search.search({
-        jql: `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`
+        jql: urlQuery
     }, (error, result)  => {
+        console.log('enviou query: ', urlQuery);
+        console.log('recebeu resposta: ', result);
+        if(result === null){
+          console.log("Jira retornou null");
+          res.status(400).send({message: "bad request. Jira returned null"});
+        }
+        if(error){
+          console.log("Deu erro na requisição do jira: ", error);
+          res.status(503).send({message: "error caught"});
+        }
         result.issues.forEach(issue => {
             resultArray.push({
                 key: issue.key,

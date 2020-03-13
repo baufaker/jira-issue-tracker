@@ -1,3 +1,26 @@
+.search-input{
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-left: 10px;
+    color: #777777;
+    border: 1px solid #ccc;
+    font-weight: 600;
+    background: white;
+    outline: none;
+}
+
+.search-button{
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-left: 10px;
+    color: white;
+    border: 0;
+    text-transform: uppercase;
+    background: #0723ea;
+    font-weight: 600;
+    outline: none;
+}
+
 .dev-issues{
     width: 80%;
     margin:auto;
@@ -7,14 +30,19 @@
     width: 110px;
     text-align: center;
     margin: 10px;
-    box-shadow: 1px 1px 1px #CCC;
+    box-shadow: 3px 3px 3px #CCC;
     padding: 10px;
-    background: #efefef;
+    background: #e8dcdc;
     border-radius: 5px;
     height: 170px;
-    float: left;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .dev-issue .summary{
     font-size: 12px;
+}
+
+.dev-issue .key{
+    color: #9c8a8a;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
+import InputMask from 'react-input-mask';
 
 import './Dashboard.css';
 
@@ -9,7 +9,7 @@ import './Dashboard.css';
 const Dashboard = () => {
     // const [collaborators, setCollaborators] = useState([])
     const [projects, setProjects] = useState(["DA", "AH", "NS", "DES"])
-    const [selectedProj, setSelectedProj] = useState(null)
+    const [selectedProj, setSelectedProj] = useState("...")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +22,7 @@ const Dashboard = () => {
     }, [])
 
     const searchIssues = () => {
-        if(startDate === "" || endDate === "" || selectedProj === null) {
+        if(startDate === "" || endDate === "" || selectedProj === "...") {
             alert('insira os dados da busca');
         } else {
             //get issues
@@ -38,11 +38,19 @@ const Dashboard = () => {
         }
     }
 
+    const clearSearch = () => {
+        setEndDate("")
+        setStartDate("")
+        setSelectedProj("...")
+        setIssues([])
+    }
+
     return(
         <div className="">
             <h1>Controle de Atividade de Desenvolvimento</h1>
             <form>
-                <select onChange={e => setSelectedProj(e.target.value)}>
+                <select className="search-input" value={selectedProj} onChange={e => setSelectedProj(e.target.value)}>
+                    <option value="...">Projeto</option>
                     {projects.map((p)=>{
                         return(
                             <option key={p} value={p}>
@@ -51,17 +59,19 @@ const Dashboard = () => {
                         )
                     })}
                 </select>
-                <input name="start" type="text" placeholder="aaaa/mm/ddd" onChange={e => setStartDate(e.target.value)}/>
-                <input name="end" type="text" placeholder="aaaa/mm/ddd" onChange={e => setEndDate(e.target.value)}/>
-                <button type="button" onClick={searchIssues}>Buscar</button>
+                <InputMask className="search-input" name="start" type="text" mask="9999/99/99" value={startDate} placeholder="aaaa/mm/dd" onChange={e => setStartDate(e.target.value)}/>
+                <InputMask className="search-input" name="end" type="text" mask="9999/99/99" value={endDate} placeholder="aaaa/mm/dd" onChange={e => setEndDate(e.target.value)}/>
+                <button className="search-button" type="button" onClick={searchIssues}>Buscar</button>
+                <button className="search-button" style={{background: "red"}} type="button" onClick={clearSearch}>Limpar</button>
             </form>
             {issues.length>0 ? 
             (
                 <div  className="dev-issues">
+                { isLoading && <p>Carregando...</p> }
                 {issues.map((i)=> {
                     return(
                         <div key={i.key} className="dev-issue">
-                            <p>{i.key}</p>
+                            <p className="key">{i.key}</p>
                             <p className="summary">{i.summary}</p>
                             <p>{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
                         </div>
@@ -72,7 +82,7 @@ const Dashboard = () => {
                 isLoading ? (
                     <p>carregando...</p>
                 ) : (
-                    <p>Faça sua busca</p>
+                    <p style={{"color": "#b5b5b5"}}>- Faça sua busca -</p>
                 )
             )}
         </div>
