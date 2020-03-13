@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
+import {setIssues} from '../actions';
+import {connect} from 'react-redux';
 
 import './Dashboard.css';
 
+//neste projeto apenas as issues estão gravadas no redux para efeitos de uso em mais de um componente (filtro por usuário, por exemplo)
 
-
-
-const Dashboard = () => {
+const Dashboard = (props) => {
     // const [collaborators, setCollaborators] = useState([])
     const [projects, setProjects] = useState(["DA", "AH", "NS", "DES"])
     const [selectedProj, setSelectedProj] = useState("...")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [isLoading, setIsLoading] = useState(false)
-    const [issues, setIssues] = useState([])
+    // const [issues, setIssues] = useState([])
     
 
     //declarando o useEffect tendo como segundo parâmetro um array vazio, ele roda como se fosse ComponentDidMount. Se não passarmos isso, ele roda toda vez que o componente é criado ou atualizado (funcionando como componentdidmount e componentdidupdate)
-    useEffect(() => {
+    // useEffect(() => {
           
-    }, [])
+    // }, [])
 
+    
     const searchIssues = () => {
         if(startDate === "" || endDate === "" || selectedProj === "...") {
             alert('insira os dados da busca');
         } else {
             //get issues
             setIsLoading(true);
-    
+            
             fetch(`http://localhost:8443?proj=${selectedProj}&startDate=${startDate}&endDate=${endDate}`)
             .then(r=> r.json())
             .then(data=>{
-                setIssues(data);
+                // setIssues(data);
                 setIsLoading(false);
+                props.updateIssues(data);
             })
             .catch(err=>console.log(err))
         }
@@ -64,11 +67,11 @@ const Dashboard = () => {
                 <button className="search-button" type="button" onClick={searchIssues}>Buscar</button>
                 <button className="search-button" style={{background: "red"}} type="button" onClick={clearSearch}>Limpar</button>
             </form>
-            {issues.length>0 ? 
+            {props.issues.length>0 ? 
             (
                 <div  className="dev-issues">
                 { isLoading && <p>Carregando...</p> }
-                {issues.map((i)=> {
+                {props.issues.map((i)=> {
                     return(
                         <div key={i.key} className="dev-issue">
                             <p className="key">{i.key}</p>
@@ -89,4 +92,10 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+function mapStateToProps(state) {
+    return {issues: state.issues}
+}
+
+export default connect(mapStateToProps, {
+  updateIssues: setIssues  
+})(Dashboard)

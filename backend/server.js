@@ -1,7 +1,7 @@
 let express = require('express');
 const fetch = require("node-fetch");
 const JiraClient = require("jira-connector");
-const authData = require("./environment/auth")
+const authData = require("./environment/auth");
 
 let app = express();
 
