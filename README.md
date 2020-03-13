@@ -17,7 +17,10 @@ module.exports = authData;
 </code></pre>
 
 #4
-Start client service from root directory with "yarn start"
+Install dependencies with "yarn" within both root (/) and /backend directories
 
 #5
+Start client service from root directory with "yarn start"
+
+#6
 Start server from /backend directory with "yarn start"
