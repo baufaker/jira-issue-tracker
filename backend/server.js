@@ -1,16 +1,14 @@
 let express = require('express');
 const fetch = require("node-fetch");
 const JiraClient = require("jira-connector");
+const authData = require("./environment/auth")
 
 let app = express();
 
 let PORT = 8443;
 let jira = new JiraClient({
     host: "softwarenews.atlassian.net",
-    basic_auth: {
-      email: "guilhermebaufaker@snews.tv",
-      api_token: "CZK136fpCJN34Cfslpfh5764"
-    }
+    basic_auth: authData
   });
 
   app.use((req, res, next) => {
