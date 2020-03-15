@@ -1,5 +1,5 @@
 # 1
-create folder "environment" in the same level as "nodemodules" folder.
+create folder "environment" in /backend the same level as "nodemodules" folder.
 
 # 2
 create "auth.js" inside "environment" folder you just created.
