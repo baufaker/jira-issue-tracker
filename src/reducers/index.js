@@ -4,10 +4,9 @@ export default (state, action) => {
            return Object.assign({}, state, {
                issues: action.issues
            });
-           return;
-       case "CLEAR_ISSUES":
+        case "CLEAR_ISSUES":
             //do something
-           break;
+            return;
        default:
            return state;
             }
