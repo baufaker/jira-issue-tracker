@@ -28,7 +28,7 @@ let jira = new JiraClient({
     next();
   });
 
-app.get('/', function(req, res) {
+app.get('/search-by-project', function(req, res) {
     let resultArray = [];
     let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
     // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
@@ -61,6 +61,41 @@ app.get('/', function(req, res) {
         // console.log(resultArray);
         res.status(200).json(resultArray);
     });
+});
+
+app.get('/search-by-user', function(req, res) {
+  let resultArray = [];
+  let urlQuery = `assignee = ${req.query.user} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+  // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
+
+  console.log('chegou: ', req.query);
+  jira.search.search({
+      jql: urlQuery
+  }, (error, result)  => {
+      console.log('enviou query: ', urlQuery);
+      console.log('recebeu resposta: ', result);
+      if(result === null){
+        console.log("Jira retornou null");
+        res.status(400).send({message: "bad request. Jira returned null"});
+      }
+      if(error){
+        console.log("Deu erro na requisição do jira: ", error);
+        res.status(503).send({message: "error caught"});
+      }
+      result.issues.forEach(issue => {
+          resultArray.push({
+              key: issue.key,
+              summary: issue.fields.summary,
+              assignee: {
+                  name: issue.fields.assignee ? issue.fields.assignee.displayName : null,
+                  URL: issue.fields.assignee ? issue.fields.assignee.self : null
+              },
+              project: issue.fields.project.key
+          });
+      });
+      // console.log(resultArray);
+      res.status(200).json(resultArray);
+  });
 });
 
 app.listen(PORT, function() {

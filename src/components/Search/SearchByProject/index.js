@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
-import {setIssues} from '../../actions';
+import {setIssues} from '../../../actions';
 import {connect} from 'react-redux';
 
 const SearchByProject = (props) => {
@@ -23,7 +23,7 @@ const SearchByProject = (props) => {
         //get issues
         setIsLoading(true);
         
-        fetch(`http://localhost:8443?proj=${selectedProj}&startDate=${startDate}&endDate=${endDate}`)
+        fetch(`http://localhost:8443/search-by-project?proj=${selectedProj}&startDate=${startDate}&endDate=${endDate}`)
         .then(r=> r.json())
         .then(data=>{
             // setIssues(data);
