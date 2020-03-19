@@ -68,11 +68,13 @@ const SearchByUsers = (props) => {
                 { isLoading && <p>Carregando...</p> }
                 {props.issues.map((i)=> {
                     return(
-                        <div key={i.key} className="dev-issue">
-                            <p className="key">{i.key}</p>
-                            <p className="summary">{i.summary}</p>
-                            <p>{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
-                        </div>
+                        <a key={i.key} href={"https://softwarenews.atlassian.net/browse/"+i.key} target="_blank" style={{color: 'inherit'}}>
+                            <div className="dev-issue">
+                                <p className="key">{i.key}</p>
+                                <p className="summary">{i.summary}</p>
+                                <p>{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
+                            </div>
+                        </a>
                     )
                 })}
                 </div>
