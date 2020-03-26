@@ -30,7 +30,8 @@ let jira = new JiraClient({
 
 app.get('/search-by-project', function(req, res) {
     let resultArray = [];
-    let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+    let urlQuery = `project = ${req.query.proj} AND status changed during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+    // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
     // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
 
     console.log('chegou: ', req.query);
@@ -51,6 +52,7 @@ app.get('/search-by-project', function(req, res) {
             resultArray.push({
                 key: issue.key,
                 summary: issue.fields.summary,
+                status: issue.fields.status.name,
                 assignee: {
                     name: issue.fields.assignee ? issue.fields.assignee.displayName : null,
                     URL: issue.fields.assignee ? issue.fields.assignee.self : null
@@ -65,7 +67,8 @@ app.get('/search-by-project', function(req, res) {
 
 app.get('/search-by-user', function(req, res) {
   let resultArray = [];
-  let urlQuery = `assignee = ${req.query.user} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+  let urlQuery = `assignee = ${req.query.user} AND status changed during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+  // let urlQuery = `assignee = ${req.query.user} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
   // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
 
   console.log('chegou: ', req.query);
@@ -86,6 +89,7 @@ app.get('/search-by-user', function(req, res) {
           resultArray.push({
               key: issue.key,
               summary: issue.fields.summary,
+              status: issue.fields.status.name,
               assignee: {
                   name: issue.fields.assignee ? issue.fields.assignee.displayName : null,
                   URL: issue.fields.assignee ? issue.fields.assignee.self : null

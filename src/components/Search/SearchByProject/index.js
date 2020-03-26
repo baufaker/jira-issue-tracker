@@ -60,9 +60,10 @@ const SearchByProject = (props) => {
                     return(
                         <a key={i.key} href={"https://softwarenews.atlassian.net/browse/"+i.key} target="_blank" style={{color: 'inherit'}}>
                             <div className="dev-issue">
-                                <p className="key">{i.key}</p>
-                                <p className="summary">{i.summary}</p>
-                                <p>{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
+                                <p className="issue-key">{i.key}</p>
+                                <p className="issue-summary">{i.summary}</p>
+                                <p className="issue-status">{i.status}</p>
+                                <p className="issue-assignee">{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
                             </div>
                         </a>
                     )

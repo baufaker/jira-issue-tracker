@@ -43,10 +43,22 @@
     opacity: 0.7;
 }
 
-.dev-issue .summary{
+.issue-summary{
     font-size: 12px;
 }
 
-.dev-issue .key{
+.issue-key{
     color: #9c8a8a;
+}
+
+.issue-assignee{
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.issue-status{
+    background: #fff0d5;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 2px;
 }
