@@ -72,8 +72,8 @@ const SearchByUsers = (props) => {
                             <div className="dev-issue">
                                 <p className="issue-key">{i.key}</p>
                                 <p className="issue-summary">{i.summary}</p>
+                                <p className="issue-status">{i.status }</p>
                                 <p className="issue-assignee">{i.assignee.name ? i.assignee.name : "DESATRIBUÍDO" }</p>
-                                <p className="issue-status">Status: {i.status }</p>
                             </div>
                         </a>
                     )
