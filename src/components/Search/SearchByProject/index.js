@@ -4,7 +4,7 @@ import {setIssues} from '../../../actions';
 import {connect} from 'react-redux';
 
 const SearchByProject = (props) => {
-  const [projects, setProjects] = useState(["DA", "AH", "NS", "DES"])
+  const [projects, setProjects] = useState(["DA", "AH", "NS", "DES", "HOM", "SL"])
   const [selectedProj, setSelectedProj] = useState("...")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
