@@ -90,6 +90,7 @@ app.get('/search-by-user', function(req, res) {
               key: issue.key,
               summary: issue.fields.summary,
               status: issue.fields.status.name,
+              statusChanged: issue.fields.statuscategorychangedate.substring(0, 10).split('-').reverse().join('/'),
               assignee: {
                   name: issue.fields.assignee ? issue.fields.assignee.displayName : null,
                   URL: issue.fields.assignee ? issue.fields.assignee.self : null
