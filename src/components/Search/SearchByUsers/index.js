@@ -69,7 +69,8 @@ const SearchByUsers = (props) => {
                 {props.issues.map((i)=> {
                     return(
                         <a key={i.key} href={"https://softwarenews.atlassian.net/browse/"+i.key} target="_blank" style={{color: 'inherit'}}>
-                            <div className="dev-issue">
+                            <div className="dev-issue" style={i.tester.name && {"background": "#ade1ff"}}>
+                                {i.tester.name && <p className="issue-tester">Tester: {i.tester.name}</p>}
                                 <p className="issue-key">{i.key}</p>
                                 <p className="issue-summary">{i.summary}</p>
                                 <p className="issue-status">{i.status }</p>

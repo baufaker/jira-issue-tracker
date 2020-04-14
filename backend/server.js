@@ -67,7 +67,7 @@ app.get('/search-by-project', function(req, res) {
 
 app.get('/search-by-user', function(req, res) {
   let resultArray = [];
-  let urlQuery = `assignee = ${req.query.user} AND status changed during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
+  let urlQuery = `(assignee = ${req.query.user} OR tester = ${req.query.user}) AND status changed during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
   // let urlQuery = `assignee = ${req.query.user} AND status changed to FINALIZADO during (\"${req.query.startDate}\", \"${req.query.endDate}\")`;
   // let urlQuery = `project = ${req.query.proj} AND status changed to FINALIZADO`;
 
@@ -86,6 +86,7 @@ app.get('/search-by-user', function(req, res) {
         res.status(503).send({message: "error caught"});
       }
       result.issues.forEach(issue => {
+        //console.log('tester:', issue.fields.customfield_10025);
           resultArray.push({
               key: issue.key,
               summary: issue.fields.summary,
@@ -94,6 +95,10 @@ app.get('/search-by-user', function(req, res) {
                   name: issue.fields.assignee ? issue.fields.assignee.displayName : null,
                   URL: issue.fields.assignee ? issue.fields.assignee.self : null
               },
+              tester: {
+                name: issue.fields.customfield_10025 ? issue.fields.customfield_10025.displayName : null,
+                URL: issue.fields.customfield_10025 ? issue.fields.customfield_10025.self : null
+            },
               project: issue.fields.project.key
           });
       });
