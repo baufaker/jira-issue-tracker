@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import InputMask from 'react-input-mask';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 import {setIssues} from '../../../actions';
 import {connect} from 'react-redux';
 
@@ -57,15 +58,15 @@ const SearchByUsers = (props) => {
                       )
                   })}
               </select>
-              <InputMask className="search-input" name="start" type="text" mask="9999/99/99" value={startDate} placeholder="aaaa/mm/dd" onChange={e => setStartDate(e.target.value)}/>
-              <InputMask className="search-input" name="end" type="text" mask="9999/99/99" value={endDate} placeholder="aaaa/mm/dd" onChange={e => setEndDate(e.target.value)}/>
+              <DayPickerInput placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={startDate} onDayChange={date => {setStartDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
+              <DayPickerInput placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={endDate} onDayChange={date => {setEndDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
               <button className="search-button" type="button" onClick={searchIssues}>Buscar</button>
               <button className="search-button" style={{background: "red"}} type="button" onClick={clearSearch}>Limpar</button>
           </form>
           {props.issues.length>0 ? 
             (
                 <div  className="dev-issues">
-                { isLoading && <p>Carregando...</p> }
+                { isLoading ? <p>Carregando...</p> : <p><strong>{props.issues.length}</strong> resultados encontrados</p>}
                 {props.issues.map((i)=> {
                     return(
                         <a key={i.key} href={"https://softwarenews.atlassian.net/browse/"+i.key} target="_blank" style={{color: 'inherit'}}>

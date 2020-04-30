@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 import {setIssues} from '../../../actions';
 import {connect} from 'react-redux';
 
@@ -36,6 +38,7 @@ const SearchByProject = (props) => {
 
   return(
     <div>
+
       <form>
               <select className="search-input" value={selectedProj} onChange={e => setSelectedProj(e.target.value)}>
                   <option value="...">Projeto</option>
@@ -45,10 +48,10 @@ const SearchByProject = (props) => {
                               {p}
                           </option>
                       )
-                  })}
+                    })}
               </select>
-              <InputMask className="search-input" name="start" type="text" mask="9999/99/99" value={startDate} placeholder="aaaa/mm/dd" onChange={e => setStartDate(e.target.value)}/>
-              <InputMask className="search-input" name="end" type="text" mask="9999/99/99" value={endDate} placeholder="aaaa/mm/dd" onChange={e => setEndDate(e.target.value)}/>
+              <DayPickerInput className="search-input" placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={startDate} onDayChange={date => {setStartDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
+              <DayPickerInput placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={endDate} onDayChange={date => {setEndDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
               <button className="search-button" type="button" onClick={searchIssues}>Buscar</button>
               <button className="search-button" style={{background: "red"}} type="button" onClick={clearSearch}>Limpar</button>
           </form>
@@ -72,10 +75,10 @@ const SearchByProject = (props) => {
             ) : (
                 isLoading ? (
                     <p>carregando...</p>
-                ) : (
-                    <p style={{"color": "#b5b5b5"}}>- Faça sua busca -</p>
-                )
-            )}
+                    ) : (
+                        <p style={{"color": "#b5b5b5"}}>- Faça sua busca -</p>
+                        )
+                        )}
     </div>
   );
 }
@@ -85,5 +88,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-updateIssues: setIssues  
+    updateIssues: setIssues  
 })(SearchByProject)
