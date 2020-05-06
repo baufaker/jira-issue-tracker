@@ -100,7 +100,8 @@ app.get('/search-by-user', function(req, res) {
                 name: issue.fields.customfield_10025 ? issue.fields.customfield_10025.displayName : null,
                 URL: issue.fields.customfield_10025 ? issue.fields.customfield_10025.self : null
             },
-              project: issue.fields.project.key
+              project: issue.fields.project.key,
+              timeSpent: issue.fields.timespent
           });
       });
       // console.log(resultArray);

@@ -58,6 +58,7 @@ select, input{
 .issue-assignee{
     font-size: 13px;
     font-weight: 600;
+    margin-bottom: 0;
 }
 
 .issue-status{
@@ -72,4 +73,11 @@ select, input{
     font-size: 10px;
     border-radius: 5px;
     margin: 0px;
+}
+
+.issue-timespent{
+    font-size: 9px;
+    margin-top: 2px;
+    color: #8d3b0b;
+    font-weight: 600;
 }

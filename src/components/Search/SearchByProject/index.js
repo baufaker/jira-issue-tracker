@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import InputMask from 'react-input-mask';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import {setIssues} from '../../../actions';
@@ -50,7 +49,7 @@ const SearchByProject = (props) => {
                       )
                     })}
               </select>
-              <DayPickerInput className="search-input" placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={startDate} onDayChange={date => {setStartDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
+              <DayPickerInput placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={startDate} onDayChange={date => {setStartDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
               <DayPickerInput placeholder="dd/mm/aaaa" formatDate={(date)=> date.toLocaleDateString()} selected={endDate} onDayChange={date => {setEndDate(date.toLocaleDateString().split('/').reverse().join('/'));/*console.log(date.toLocaleDateString())*/}} />
               <button className="search-button" type="button" onClick={searchIssues}>Buscar</button>
               <button className="search-button" style={{background: "red"}} type="button" onClick={clearSearch}>Limpar</button>
